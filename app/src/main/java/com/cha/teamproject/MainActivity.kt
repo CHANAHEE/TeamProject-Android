@@ -1,6 +1,7 @@
-package com.example.teamproject
+package com.cha.teamproject
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,12 +13,14 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
-import com.example.teamproject.databinding.ActivityMainBinding
+import com.cha.teamproject.R
+import com.cha.teamproject.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
 
-    val binding:ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         //var placeUrl = "http://tjdrjs0803.dothome.co.kr/WebInterfaceTest/index.html"
         binding.wv.loadUrl(placeUrl)
 
-        binding.wv.addJavascriptInterface(WebAppInterface(this),"test")
+        binding.wv.addJavascriptInterface(WebAppInterface(this),"share")
 
     }
 
@@ -51,8 +54,12 @@ class MainActivity : AppCompatActivity() {
 
         /** Show a toast from the web page  */
         @JavascriptInterface
-        fun showToast(toast: String) {
-            Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show()
+        fun showToast() {
+            Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show()
+        }
+        @JavascriptInterface
+        fun openWrite_m() {
+            mContext.startActivity(Intent(mContext,WriteActivity::class.java))
         }
     }
 
