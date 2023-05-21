@@ -2,14 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/home_tab"
-        android:title="홈"/>
+        android:title="홈"
+        android:icon="@drawable/icon_home"/>
 
     <item android:id="@+id/shop_tab"
-        android:title="쇼핑"/>
+        android:title="쇼핑"
+        android:icon="@drawable/icon_shop"/>
 
     <item android:id="@+id/share_tab"
-        android:title="집들이"/>
+        android:title="집들이"
+        android:icon="@drawable/icon_share"/>
 
     <item android:id="@+id/myinfo_tab"
-        android:title="내 쇼핑"/>
+        android:title="내 쇼핑"
+        android:icon="@drawable/icon_order"/>
 </menu>

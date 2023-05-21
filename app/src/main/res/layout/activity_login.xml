@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WriteActivity">
+    tools:context=".LoginActivity">
 
     <WebView
-        android:id="@+id/write_wv"
+        android:id="@+id/login_wv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </RelativeLayout>

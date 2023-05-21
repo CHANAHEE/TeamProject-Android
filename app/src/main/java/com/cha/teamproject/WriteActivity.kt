@@ -19,18 +19,17 @@ class WriteActivity : AppCompatActivity() {
 
     private fun init(){
         webViewConfig()
-
     }
 
     private fun webViewConfig(){
 
-        binding.wv.webViewClient = WebViewClient()
-        binding.wv.webChromeClient = WebChromeClient()
-        binding.wv.settings.javaScriptEnabled = true
+        binding.writeWv.webViewClient = WebViewClient()
+        binding.writeWv.webChromeClient = WebChromeClient()
+        binding.writeWv.settings.javaScriptEnabled = true
         var placeUrl = "http://tjdrjs0803.dothome.co.kr/TeamProject/share_write.html"
         //var placeUrl = "http://tjdrjs0803.dothome.co.kr/WebInterfaceTest/index.html"
-        binding.wv.loadUrl(placeUrl)
-
-        binding.wv.addJavascriptInterface(MainActivity.WebAppInterface(this),"share")
+        binding.writeWv.loadUrl(placeUrl)
+        var mainActivity = MainActivity()
+        binding.writeWv.addJavascriptInterface(mainActivity.WebAppInterface(this),"share")
     }
 }

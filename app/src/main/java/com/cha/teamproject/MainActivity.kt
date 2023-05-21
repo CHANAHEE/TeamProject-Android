@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.webkit.JavascriptInterface
@@ -38,28 +39,52 @@ class MainActivity : AppCompatActivity() {
 
     private fun webViewConfig(){
 
-        binding.wv.webViewClient = WebViewClient()
-        binding.wv.webChromeClient = WebChromeClient()
-        binding.wv.settings.javaScriptEnabled = true
+        binding.homeWv.webViewClient = WebViewClient()
+        binding.homeWv.webChromeClient = WebChromeClient()
+        binding.homeWv.settings.javaScriptEnabled = true
+        G.HomeWebView = binding.homeWv
         var placeUrl = "http://tjdrjs0803.dothome.co.kr/TeamProject/index.html"
         //var placeUrl = "http://tjdrjs0803.dothome.co.kr/WebInterfaceTest/index.html"
-        binding.wv.loadUrl(placeUrl)
+        binding.homeWv.loadUrl(placeUrl)
 
-        binding.wv.addJavascriptInterface(WebAppInterface(this),"share")
+
+        binding.homeWv.addJavascriptInterface(WebAppInterface(this),"main")
 
     }
 
     /** Instantiate the interface and set the context  */
-    class WebAppInterface(private val mContext: Context) {
+    inner class WebAppInterface(private val mContext: Context) {
 
-        /** Show a toast from the web page  */
-        @JavascriptInterface
-        fun showToast() {
-            Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show()
-        }
         @JavascriptInterface
         fun openWrite_m() {
             mContext.startActivity(Intent(mContext,WriteActivity::class.java))
+        }
+
+        @JavascriptInterface
+        fun openShopDetail_m(brand:String, image:String, description:String, price: String) {
+            mContext.startActivity(Intent(mContext,ShopDetailActivity::class.java)
+                .putExtra("brand",brand)
+                .putExtra("image",image)
+                .putExtra("description",description)
+                .putExtra("price",price))
+        }
+
+        @JavascriptInterface
+        fun openPrepare_m() {
+            mContext.startActivity(Intent(mContext,PrepareActivity::class.java))
+        }
+
+        @JavascriptInterface
+        fun showToast_m() {
+            Toast.makeText(this@MainActivity, "준비중인 페이지 입니다.", Toast.LENGTH_SHORT).show()
+        }
+        @JavascriptInterface
+        fun openSignup_m(){
+            mContext.startActivity(Intent(mContext,SignupActivity::class.java))
+        }
+        @JavascriptInterface
+        fun openSignin_m(){
+            mContext.startActivity(Intent(mContext,LoginActivity::class.java))
         }
     }
 
@@ -71,19 +96,19 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.home_tab -> {
                 var placeUrl = "http://tjdrjs0803.dothome.co.kr/TeamProject/index.html"
-                binding.wv.loadUrl(placeUrl)
+                binding.homeWv.loadUrl(placeUrl)
             }
             R.id.shop_tab -> {
                 var placeUrl = "javaScript:openShop()"
-                binding.wv.loadUrl(placeUrl)
+                binding.homeWv.loadUrl(placeUrl)
             }
             R.id.share_tab -> {
                 var placeUrl = "javaScript:openShare()"
-                binding.wv.loadUrl(placeUrl)
+                binding.homeWv.loadUrl(placeUrl)
             }
             R.id.myinfo_tab -> {
                 var placeUrl = "javaScript:openOrder()"
-                binding.wv.loadUrl(placeUrl)
+                binding.homeWv.loadUrl(placeUrl)
             }
         }
     }
