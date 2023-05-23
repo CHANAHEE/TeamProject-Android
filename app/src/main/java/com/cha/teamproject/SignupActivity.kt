@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
@@ -41,7 +42,8 @@ class SignupActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun openIndexPage_m(){
-            finish()
+            runOnUiThread { Log.i("adsfzzd","헬로") }
+            runOnUiThread { this@SignupActivity.finish() }
         }
     }
     @RequiresApi(Build.VERSION_CODES.O)

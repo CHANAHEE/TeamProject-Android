@@ -20,16 +20,18 @@ import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
 
-    val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init()
+        initial()
     }
 
-    private fun init(){
+    private fun initial(){
         webViewConfig()
+
         binding.bnv.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener {
 
             changeFragment(it)
@@ -47,7 +49,15 @@ class MainActivity : AppCompatActivity() {
         var placeUrl = "http://tjdrjs0803.dothome.co.kr/TeamProject/index.html"
         //var placeUrl = "http://tjdrjs0803.dothome.co.kr/WebInterfaceTest/index.html"
         binding.homeWv.loadUrl(placeUrl)
+        binding.homeWv.webViewClient = object : WebViewClient(){
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                if(intent.getStringExtra("shopDetail") == "shopDetail"){
 
+                    binding.bnv.selectedItemId = R.id.shop_tab
+                }
+            }
+        }
 
         binding.homeWv.addJavascriptInterface(WebAppInterface(this),"main")
 
@@ -63,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun openShopDetail_m(brand:String, image:String, description:String, price: String) {
+            //runOnUiThread { Log.i("asdfz",G.HomeWebView.url.toString()) }
             mContext.startActivity(Intent(mContext,ShopDetailActivity::class.java)
                 .putExtra("brand",brand)
                 .putExtra("image",image)
@@ -133,6 +144,7 @@ class MainActivity : AppCompatActivity() {
                 binding.homeWv.loadUrl(placeUrl)
             }
             R.id.shop_tab -> {
+                Toast.makeText(this, "헬롱2222", Toast.LENGTH_SHORT).show()
                 var placeUrl = "javaScript:openShop()"
                 binding.homeWv.loadUrl(placeUrl)
             }

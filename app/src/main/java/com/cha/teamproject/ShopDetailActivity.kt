@@ -64,16 +64,19 @@ class ShopDetailActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBackPressed() {
         G.HomeWebView.goBack()
-        G.HomeWebView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                var placeUrl2 = "javascript:openShop()"
-                G.HomeWebView.loadUrl(placeUrl2)
-                G.HomeWebView.postDelayed({
-                    finish()
-                },100)
-            }
-        }
+        startActivity(Intent(this,MainActivity::class.java).putExtra("shopDetail","shopDetail"))
+        finish()
+
+//        G.HomeWebView.webViewClient = object : WebViewClient() {
+//            override fun onPageFinished(view: WebView?, url: String?) {
+//                super.onPageFinished(view, url)
+//                var placeUrl2 = "javascript:openShop()"
+//                G.HomeWebView.loadUrl(placeUrl2)
+//                G.HomeWebView.postDelayed({
+//                    finish()
+//                },100)
+//            }
+//        }
     }
 }
 
