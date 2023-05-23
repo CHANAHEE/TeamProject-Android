@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.cha.teamproject.MainActivity">
 
+
     <WebView
         android:id="@+id/home_wv"
         android:layout_width="match_parent"

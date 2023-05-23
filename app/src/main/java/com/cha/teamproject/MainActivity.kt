@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun init(){
         webViewConfig()
         binding.bnv.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener {
+
             changeFragment(it)
             return@OnItemSelectedListener true
         })
@@ -86,11 +87,44 @@ class MainActivity : AppCompatActivity() {
         fun openSignin_m(){
             mContext.startActivity(Intent(mContext,LoginActivity::class.java))
         }
+
+        @JavascriptInterface
+        fun selectSideMenu(id: String){
+            runOnUiThread {
+                when(id){
+                    "home"-> {
+                        if(binding.bnv.selectedItemId != R.id.home_tab) {
+                            binding.bnv.selectedItemId = R.id.home_tab
+                        }
+                    }
+                    "shop"-> {
+                        if(binding.bnv.selectedItemId != R.id.shop_tab){
+                            binding.bnv.selectedItemId = R.id.shop_tab
+                        }
+                    }
+                    "share"-> {
+                        Log.i("testasdfasdf","사이드메뉴 선택리스너")
+                        if(binding.bnv.selectedItemId != R.id.share_tab){
+                            Log.i("testasdfasdf","사이드메뉴 선택리스너 if 문 내부")
+                            sideFlag = true
+                            binding.bnv.selectedItemId = R.id.share_tab
+                        }
+                    }
+                    "order"-> {
+                        if(binding.bnv.selectedItemId != R.id.myinfo_tab){
+                            binding.bnv.selectedItemId = R.id.myinfo_tab
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     /*
     *       프래그먼트 전환 함수
     * */
+    var sideFlag = false
     private fun changeFragment(item: MenuItem){
 
         when(item.itemId){
@@ -103,6 +137,8 @@ class MainActivity : AppCompatActivity() {
                 binding.homeWv.loadUrl(placeUrl)
             }
             R.id.share_tab -> {
+                Log.i("testasdfasdf","바탐내비 선택리스너")
+                if(sideFlag) return
                 var placeUrl = "javaScript:openShare()"
                 binding.homeWv.loadUrl(placeUrl)
             }
